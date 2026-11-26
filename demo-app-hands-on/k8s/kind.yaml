@@ -1,0 +1,15 @@
+# Three nodes: one control plane and two workers.
+# The first worker is labelled tier: data. Postgres, api-golang and client-react run on it (nodeSelector),
+# so the second worker holds only api-node copies: that is the one we kill in step 6 of part B.
+# Port 30080 of the cluster (the client-react Service) is port 8081 on your machine.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 30080
+        hostPort: 8081
+  - role: worker
+    labels:
+      tier: data
+  - role: worker

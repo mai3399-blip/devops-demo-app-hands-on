@@ -1,0 +1,11 @@
+# Three nodes: one control plane and two workers.
+# Port 30080 of the control-plane node is port 8081 on your machine.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 30080
+        hostPort: 8081
+  - role: worker
+  - role: worker
